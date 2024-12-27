@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import pg from "pg";
 
 const app = express();
-const port = 3001;
+const port = 3000;
 
 const db = new pg.Client({
     user: "postgres",
@@ -47,6 +47,7 @@ app.post("/add", async (req, res) => {
 
         try {
             await db.query("INSERT INTO visited_states (state_code) VALUES ($1)", [stateCode])
+            res.redirect("/")
         } catch (error) {
             const states = await checkVisisted();
             res.render("index.ejs", {
